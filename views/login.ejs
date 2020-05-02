@@ -1,0 +1,62 @@
+<!DOCTYPE>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Web Dev - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
+</head>
+<body>
+  <div class="row">
+    <h1 class="col-6 title">Web Dev</h1>
+  </div>
+  <div class="row">
+    <form action="/api/login" method="POST" class="col-6 form-style" 
+    id="login-form">
+      <input type="email" name="email" id="email" placeholder="Email"
+      class="col-12 input-style">
+      <br>
+      <input type="password" name="password" id="password"
+      placeholder="Password" class="col-12 input-style">
+      <br>
+      <input type="submit" value="Submit" class="col-2 submit-btn">
+    </form>
+  </div>
+  <div class="row">
+    <p class="col-12">Made By Mostafa@aminbros.com
+    </p>
+  </div>
+  <div id="demo">
+  </div>
+  <script>
+document.getElementById("login-form").addEventListener('submit', function(ev) {
+  ev.preventDefault();
+  ajaxAction();
+});
+function ajaxAction() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+      // Typical action to be performed when the document is ready:
+      var response_obj = JSON.parse(this.responseText);
+      if(response_obj.status == 'error') {
+        document.getElementById("demo").innerHTML = response_obj.message;
+      } else {
+        document.getElementById("demo").innerText = "OK";
+      }
+    }
+  };
+  var email = document.getElementById('email').value;
+  var password = document.getElementById('password').value;
+  var data_object = {
+    email: email,
+    password: password
+  }
+  data_object = JSON.stringify(data_object);
+  xhttp.open("POST", "http://localhost:3000/api/login", true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send(data_object);
+}
+  </script>
+</body>
+</html>
