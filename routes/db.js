@@ -26,12 +26,32 @@ exports.selectAll = function (sql, paramsArray) {
         conn.query(sql, paramsArray)
           .then(result => {
             conn.end();
-            return resolve(result[0]);
+            return resolve(result);
           })
           .catch(err => {
             conn.end();
             return reject(err);
           })
+      })
+  });
+}
+
+exports.insertOne = function (sql, paramsArray) {
+  return new Promise(function (resolve, reject) {
+    makeConn()
+      .then(conn => {
+        conn.query(sql, paramsArray)
+         .then(result => {
+            conn.end();
+            return resolve(result);
+         })
+         .catch(err => {
+           console.log(err)
+           return reject(err);
+         })
+      })
+      .catch(err => {
+        return reject(err);
       })
   });
 }

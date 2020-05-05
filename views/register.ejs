@@ -1,0 +1,71 @@
+<!DOCTYPE>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Web Dev - Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
+</head>
+<body>
+  <div class="row">
+    <h1 class="col-6 title">Web Dev</h1>
+  </div>
+  <div class="row">
+    <form action="/api/register" method="POST" class="col-6 form-style" 
+    id="register-form">
+      <h3 class="col-12">
+        Register
+      </h3>
+      <input type="name" name="name" id="name" placeholder="Name"
+      class="col-12 input-style">
+      <br>
+      <input type="email" name="email" id="email" placeholder="Email"
+      class="col-12 input-style">
+      <br>
+      <input type="password" name="password" id="password"
+      placeholder="Password" class="col-12 input-style">
+      <br>
+      <button type="submit" class="col-3 submit-btn">Register</button>
+    </form>
+  </div>
+  <div class="row">
+    <p class="col-12">Made By Mostafa@aminbros.com
+    </p>
+  </div>
+  <div id="demo">
+  </div>
+  <script>
+document.getElementById("register-form").addEventListener('submit', 
+  function(ev) {
+    ev.preventDefault();
+    ajaxAction();
+  }
+);
+function ajaxAction() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+      var response_obj = JSON.parse(this.responseText);
+      if(response_obj.status == 'error') {
+        document.getElementById("demo").innerHTML = response_obj.message;
+      } else if (response_obj.status == 'OK') {
+        window.location = "http://localhost:3000/api/login";
+      }
+    }
+  };
+  var name = document.getElementById('name').value;
+  var email = document.getElementById('email').value;
+  var password = document.getElementById('password').value;
+  var data_object = {
+    name: name,
+    email: email,
+    password: password
+  }
+  data_object = JSON.stringify(data_object);
+  xhttp.open("POST", "http://localhost:3000/api/register", true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send(data_object);
+}
+  </script>
+</body>
+</html>

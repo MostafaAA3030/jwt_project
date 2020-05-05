@@ -4,6 +4,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 
 const apiRouter = require('./routes/api-router');
+const pageRouter = require('./routes/page-router');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 app.use(cookieParser());
 /* ROUTERS */
+app.use('/page', pageRouter);
 app.use('/api', apiRouter);
 
 app.listen(process.env.PORT || 3000, () => {

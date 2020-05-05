@@ -25,6 +25,8 @@
 .title {
   margin-left: 25%;
   color: #471;
+  text-align: center;
+  background-color: #e9e;
 }
 .form-style {
   margin-left:25%;
@@ -33,5 +35,5 @@
   margin-bottom: 20px;
 }
 .submit-btn {
-  margin-left: 83.33%;
+  margin-left: 75%;
 }
