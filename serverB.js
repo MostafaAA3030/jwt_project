@@ -1,16 +1,15 @@
 const express = require('express');
-const cookie = require('cookie');
-const jwt = require('./jwt');
+const cookieParser = require('cookie-parser');
+const jwt = require('./routes/jwt');
 
-const router = express.Router();
+const app = express();
 
-router.get('/home', authenticateToken, (req, res) => { // 
-  const user = req.user;
-  var user_obj = {
-    name: user.name,
-    email: user.email
-  };
-  res.render('home.ejs', { user: user_obj });
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+app.get('/', authenticateToken, (req, res) => {
+  res.send("THIS IS MY SECOND HOME PAGE");
 });
 
 function authenticateToken (req, res, next) {
@@ -44,9 +43,6 @@ function authenticateToken (req, res, next) {
   });
 }
 
-router.get('/logout', (req, res) => {
-  res.clearCookie('AJWT');
-  res.clearCookie('RJWT');
-  res.redirect('/api/login');
-})
-module.exports = router;
+app.listen(4000, () => {
+  console.log("Server is on port 4000 running");
+});

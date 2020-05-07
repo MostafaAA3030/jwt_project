@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon severA.js"
+    "devStartA": "nodemon severA.js",
+    "devStartB": "nodemon serverB.js"
   },
   "keywords": [],
   "author": "",

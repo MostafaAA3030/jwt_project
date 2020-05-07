@@ -28,6 +28,12 @@
   text-align: center;
   background-color: #e9e;
 }
+.menu {
+  display: inline;
+}
+.go-there-form {
+  margin-top: 20px;
+}
 .form-style {
   margin-left:25%;
 }
