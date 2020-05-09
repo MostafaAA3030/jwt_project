@@ -1,6 +1,6 @@
 const express = require('express');
 const cookie = require('cookie');
-const jwt = require('./jwt');
+const jwt = require('../lib/jwt');
 
 const router = express.Router();
 

@@ -1,8 +1,8 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
 const router = express.Router();
-const db = require('./db');
-const jwt = require('./jwt');
+const db = require('../lib/db');
+const jwt = require('../lib/jwt');
 const bcrypt = require('bcrypt');
 
 router.get('/login', (req, res) => {
@@ -130,27 +130,49 @@ router.post('/register', [
   const {name, email, password } = req.body;
   var hashedPassword = await bcrypt.hash(password, 10);
     
-  db.insertOne("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+  db.selectAll("SELECT email From users WHERE email = ?",
     [
-      name,
-      email,
-      hashedPassword
+      email
     ]
   )
     .then(result => {
-      console.log(result) 
-      var response_object = {
-        status: 'OK',
-        message: "User is registered successfully."
-      };
-      response_object = JSON.stringify(response_object);
-      return res.send(response_object);
+      if(result[0] != undefined) {
+        var error_message = "This email is taken by another person.";
+        var error_object = new RJO('error', error_message);
+        error_object = JSON.stringify(error_object);
+        res.send(error_object);     
+      } else {
+        db.insertOne("INSERT INTO users (name, email, password) VALUES " +
+        "(?, ?, ?)",
+          [
+            name,
+            email,
+            hashedPassword
+          ]
+        )
+          .then(result => {
+            console.log(result) 
+            var response_object = {
+              status: 'OK',
+              message: "User is registered successfully."
+            };
+            response_object = JSON.stringify(response_object);
+            return res.send(response_object);
+          })
+          .catch(err => {
+            var error_object = new RJO('error', 
+            "Server Error: " + err);
+            error_object = JSON.stringify(error_object);
+            return res.send(error_object);
+          });
+      }
     })
     .catch(err => {
-      var error_object = new RJO('error', 
-      "Server Error: " + err);
+      var error_message = "SERVER ERROR, report the problem and try later.";
+      console.log(error_message);
+      var error_object = new RJO('error', error_message);
       error_object = JSON.stringify(error_object);
-      return res.send(error_object);
+      res.send(error_object);
     });
 });
 

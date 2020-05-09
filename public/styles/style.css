@@ -15,7 +15,6 @@
 .col-12 {width: 100%;}
 [class*="col-"] {
   float: left;
-  padding: 15px;
 }
 .row::after {
   content: "";
@@ -23,10 +22,15 @@
   display: table;
 }
 .title {
-  margin-left: 25%;
-  color: #471;
-  text-align: center;
-  background-color: #e9e;
+  color: #14c;
+
+  padding-left:2%;
+}
+.instruction-part{
+  
+}
+.form-style {
+  
 }
 .menu {
   display: inline;
@@ -34,12 +38,11 @@
 .go-there-form {
   margin-top: 20px;
 }
-.form-style {
-  margin-left:25%;
-}
 .input-style {
-  margin-bottom: 20px;
+  margin-left: 2%;
+  font-size: 25px;
+  margin-bottom: 1%;
 }
 .submit-btn {
-  margin-left: 75%;
+  margin-left: 68.66%;
 }
